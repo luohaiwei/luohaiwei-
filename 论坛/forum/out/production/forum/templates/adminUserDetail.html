@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户详情 - 管理员</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .admin-header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .admin-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .admin-actions a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .admin-actions a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .user-profile {
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-header {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+
+        .profile-detail {
+            margin-bottom: 15px;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            color: var(--dark-color);
+            display: inline-block;
+            width: 100px;
+        }
+
+        .status-banned {
+            color: var(--danger-color);
+            font-weight: 500;
+        }
+
+        .status-active {
+            color: var(--success-color);
+            font-weight: 500;
+        }
+
+        .profile-actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+    </style>
+    <script>
+        function confirmAction(actionType) {
+            var message = actionType === 'ban'
+                ? '确定要禁言此用户吗？'
+                : '确定要解除禁言此用户吗？';
+            return confirm(message);
+        }
+    </script>
+</head>
+<body>
+<div class="admin-header">
+    <div class="container admin-nav">
+        <div class="admin-title">管理员后台</div>
+        <div class="admin-actions">
+            <a href="/admin/articleList/1">文章管理</a>
+            <a href="/admin/userList/1">用户管理</a>
+            <a href="/admin/logout">退出登录</a>
+        </div>
+    </div>
+</div>
+
+<main class="container">
+    <div th:if="${user != null}" class="user-profile">
+        <div class="profile-header">
+            <h1 class="profile-title">用户详情</h1>
+
+            <div class="profile-detail">
+                <span class="detail-label">用户名:</span>
+                <span th:text="${user.userName}"></span>
+            </div>
+
+            <div class="profile-detail">
+                <span class="detail-label">邮箱:</span>
+                <span th:text="${user.userEmail}"></span>
+            </div>
+
+            <div class="profile-detail">
+                <span class="detail-label">性别:</span>
+                <span th:text="${user.userGender}"></span>
+            </div>
+
+            <div class="profile-detail">
+                <span class="detail-label">禁言状态:</span>
+                <span th:class="${user.isBanned} ? 'status-banned' : 'status-active'"
+                      th:text="${user.isBanned} ? '已禁言' : '未禁言'">
+                    </span>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a th:if="${!user.isBanned}" class="btn btn-danger"
+               th:href="@{/admin/banUser/{userId}(userId=${user.userId})}"
+               onclick="return confirmAction('ban')">
+                禁言用户
+            </a>
+
+            <a th:if="${user.isBanned}" class="btn"
+               th:href="@{/admin/unbanUser/{userId}(userId=${user.userId})}"
+               onclick="return confirmAction('unban')">
+                解除禁言
+            </a>
+
+            <a href="/admin/userList/1" class="btn btn-secondary">返回用户列表</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>

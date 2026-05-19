@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章详情 - 管理员</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .admin-header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .admin-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .admin-actions a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .admin-actions a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .article-container {
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .article-header {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .article-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .article-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .article-content {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+        }
+
+        .article-actions {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="admin-header">
+    <div class="container admin-nav">
+        <div class="admin-title">管理员后台</div>
+        <div class="admin-actions">
+            <a href="/admin/articleList/1">文章管理</a>
+            <a href="/admin/userList/1">用户管理</a>
+            <a href="/admin/logout">退出登录</a>
+        </div>
+    </div>
+</div>
+
+<main class="container">
+    <div th:if="${article != null}" class="article-container">
+        <div class="article-header">
+            <h1 class="article-title" th:text="${article.articleTitle}"></h1>
+
+            <div class="article-meta">
+                <span>作者: <span th:text="${article.userName}"></span></span>
+                <span>发布时间: <span th:text="${article.articleTime}"></span></span>
+                <span class="article-status"
+                      th:class="${article.isActive} == 1 ? 'status-active' : 'status-inactive'"
+                      th:text="${article.isActive} == 1 ? '已上架' : '已下架'">
+                    </span>
+            </div>
+
+            <div class="article-content" th:text="${article.articleContent}"></div>
+
+            <div class="article-actions">
+                <a th:if="${article.isActive} == 0" class="btn"
+                   th:href="@{/admin/putOnSale/{aId}(aId=${article.articleId})}">
+                    上架文章
+                </a>
+                <a th:if="${article.isActive} == 1" class="btn"
+                   th:href="@{/admin/takeOffSale/{aId}(aId=${article.articleId})}">
+                    下架文章
+                </a>
+                <a href="/admin/articleList/1" class="btn btn-secondary">返回文章列表</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

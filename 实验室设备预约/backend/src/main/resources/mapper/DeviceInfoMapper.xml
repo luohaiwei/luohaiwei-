@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lab.reservation.mapper.DeviceInfoMapper">
+
+    <!-- 根据条件查询设备列表 -->
+    <select id="selectByConditions" resultType="com.lab.reservation.entity.DeviceInfo">
+        SELECT * FROM device_info
+        <where>
+            <if test="device != null">
+                <if test="device.deviceNo != null and device.deviceNo != ''">
+                    AND device_no = #{device.deviceNo}
+                </if>
+                <if test="device.deviceName != null and device.deviceName != ''">
+                    AND device_name LIKE CONCAT('%', #{device.deviceName}, '%')
+                </if>
+                <if test="device.categoryId != null">
+                    AND category_id = #{device.categoryId}
+                </if>
+                <if test="device.status != null">
+                    AND status = #{device.status}
+                </if>
+                <if test="device.laboratory != null and device.laboratory != ''">
+                    AND laboratory LIKE CONCAT('%', #{device.laboratory}, '%')
+                </if>
+            </if>
+            AND deleted = 0
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+    <!-- 查询设备及其分类 -->
+    <select id="selectDeviceWithCategory" resultType="com.lab.reservation.entity.DeviceInfo">
+        SELECT d.*, c.category_name as categoryName
+        FROM device_info d
+        LEFT JOIN device_category c ON d.category_id = c.id
+        WHERE d.deleted = 0
+        ORDER BY d.create_time DESC
+    </select>
+
+    <!-- 查询设备及其分类（单个） -->
+    <select id="selectDeviceWithCategoryById" resultType="com.lab.reservation.entity.DeviceInfo">
+        SELECT d.*, c.category_name as categoryName
+        FROM device_info d
+        LEFT JOIN device_category c ON d.category_id = c.id
+        WHERE d.id = #{id} AND d.deleted = 0
+    </select>
+
+    <!-- 设备类型分布统计 -->
+    <select id="selectDeviceTypeDistribution" resultType="java.util.Map">
+        SELECT COALESCE(c.category_name, '未分类') as categoryName, COUNT(d.id) as cnt
+        FROM device_info d
+        LEFT JOIN device_category c ON d.category_id = c.id
+        WHERE d.deleted = 0
+        GROUP BY d.category_id, c.category_name
+        ORDER BY cnt DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,46 @@
+<!-- pages/order-detail/index.wxml -->
+<view class="container">
+  <view wx:if="{{loading}}" class="loading-container">
+    <image src="/images/loading.png" class="loading-icon"></image>
+    <text>加载中...</text>
+  </view>
+  
+  <view wx:else class="order-container">
+    <!-- 订单头部 -->
+    <view class="order-header">
+      <text class="order-id">订单号: {{order.orderId}}</text>
+      <text class="order-status {{order.status === '待付款' ? 'pending' : 'completed'}}">
+        {{order.status}}
+      </text>
+    </view>
+    
+    <!-- 商品信息 -->
+    <view class="goods-section">
+      <view wx:for="{{order.goods}}" wx:key="id" class="goods-item">
+        <image class="goods-image" src="{{item.imageUrl}}" mode="aspectFit"></image>
+        <view class="goods-info">
+          <text class="goods-name">{{item.name}}</text>
+          <text class="goods-brand">{{item.brand}}</text>
+          <text class="goods-price">¥{{item.price}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 订单信息 -->
+    <view class="order-info">
+      <view class="info-item">
+        <text class="info-label">订单金额</text>
+        <text class="info-value">¥{{order.totalPrice}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">下单时间</text>
+        <text class="info-value">{{order.formattedOrderTime || '无'}}</text>
+      </view>
+    </view>
+    
+    <!-- 支付按钮 -->
+    <button class="pay-btn" bindtap="payOrder" wx:if="{{order.status === '待付款'}}">支付</button>
+    <!-- 删除按钮 -->
+    <button class="delete-order-btn" bindtap="deleteOrder">删除订单</button>
+  </view>
+</view>

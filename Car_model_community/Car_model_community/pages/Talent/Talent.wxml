@@ -1,0 +1,67 @@
+<view class="talent-container">
+  <!-- 顶部标签栏 -->
+  <view class="tab-bar">
+    <view 
+      wx:for="{{['综合', '最新']}}" 
+      wx:key="*this" 
+      class="tab {{activeTab === item ? 'active' : ''}}" 
+      data-tab="{{item}}" 
+      bindtap="switchTab"
+    >
+      {{item}}
+    </view>
+  </view>
+
+  <!-- 达人列表 -->
+  <view class="talent-list">
+    <view 
+      wx:for="{{posts}}" 
+      wx:key="userId" 
+      class="talent-item" 
+      bindtap="goToUserSpace"
+      data-userid="{{item.userId}}"
+    >
+      <!-- 头像 & 关注按钮 -->
+      <view class="header">
+        <image class="avatar" src="{{item.avatar}}"></image>
+        <button 
+          class="follow-btn {{item.isFollowed ? 'followed' : ''}}" 
+          bindtap="toggleFollow" 
+          data-index="{{index}}"
+        >
+          {{item.isFollowed ? '已关注' : '+关注'}}
+        </button>
+      </view>
+
+      <!-- 达人信息 -->
+      <view class="info">
+        <text class="name">{{item.name}}</text>
+        <text class="desc">{{item.title}}</text>
+        <view class="stats">
+          <text>关注: {{item.follow}}</text>
+          <text>粉丝: {{item.fans}}</text>
+          <text>获赞: {{item.likes}}</text>
+          <text>车模: {{item.carModelCount}}</text>
+        </view>
+      </view>
+
+      <!-- 帖子预览 -->
+      <view class="post-preview">
+        <view class="post-img-wrap">
+          <image 
+            wx:for="{{item.posts[0].images}}" 
+            wx:key="*this" 
+            class="post-img" 
+            src="{{item}}"
+          ></image>
+        </view>
+        <view class="post-info">
+          <text class="post-title">{{item.posts[0].title}}</text>
+          <text class="post-meta">
+            {{item.posts[0].brand}} • {{item.posts[0].year}} • {{item.posts[0].modelNo}}
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lab.reservation.mapper.SysUserMapper">
+
+    <!-- 根据用户名查询用户 -->
+    <select id="selectByUsername" resultType="com.lab.reservation.entity.SysUser">
+        SELECT * FROM sys_user WHERE username = #{username} AND deleted = 0
+    </select>
+
+    <!-- 查询用户角色列表 -->
+    <select id="selectUserRoles" resultType="java.lang.String">
+        SELECT r.role_code FROM sys_role r
+        INNER JOIN sys_user_role ur ON r.id = ur.role_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <!-- 查询用户权限列表 -->
+    <select id="selectUserPermissions" resultType="java.lang.String">
+        SELECT p.permission_code FROM sys_permission p
+        INNER JOIN sys_role_permission rp ON p.id = rp.permission_id
+        INNER JOIN sys_user_role ur ON rp.role_id = ur.role_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <!-- 仅更新密码列，确保重置密码与加密工具密文替换后登录校验一致 -->
+    <update id="updatePasswordById">
+        UPDATE sys_user SET password = #{password}, update_time = NOW() WHERE id = #{id} AND deleted = 0
+    </update>
+
+    <!-- 统计未删除用户总数 -->
+    <select id="countAllUsers" resultType="long">
+        SELECT COUNT(*) FROM sys_user WHERE deleted = 0
+    </select>
+
+    <!-- 用户菜单：角色-权限关联，仅 menu 类型且非 API 路径 -->
+    <select id="selectUserMenus" resultType="java.util.LinkedHashMap">
+        SELECT DISTINCT
+            p.id AS id,
+            p.parent_id AS parentId,
+            p.permission_name AS permissionName,
+            p.path AS path,
+            p.icon AS icon,
+            p.sort AS sort,
+            p.permission_code AS permissionCode
+        FROM sys_permission p
+        INNER JOIN sys_role_permission rp ON p.id = rp.permission_id
+        INNER JOIN sys_user_role ur ON rp.role_id = ur.role_id
+        WHERE ur.user_id = #{userId}
+          AND p.deleted = 0
+          AND (p.status IS NULL OR p.status = 1)
+          AND LOWER(TRIM(IFNULL(p.permission_type, ''))) = 'menu'
+          AND p.path IS NOT NULL AND TRIM(p.path) &lt;&gt; ''
+          AND TRIM(p.path) NOT LIKE '/api/%'
+        ORDER BY p.sort ASC, p.id ASC
+    </select>
+
+</mapper>

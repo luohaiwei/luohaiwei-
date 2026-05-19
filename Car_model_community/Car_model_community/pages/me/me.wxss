@@ -1,0 +1,290 @@
+.container {
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 40rpx 30rpx;
+  background-color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+}
+
+.info {
+  flex: 1;
+}
+
+.nickname {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+  display: block;
+}
+
+.id, .join-date {
+  font-size: 20rpx;
+  color: rgb(34, 29, 29);
+  display: block;
+}
+
+.stats {
+  display: flex;
+  background-color: #fff;
+  padding: 30rpx 0;
+  margin-bottom: 20rpx;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.label {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+}
+
+.menu {
+  background-color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  position: relative;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.menu-item image {
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 20rpx;
+}
+
+.menu-item text {
+  font-size: 30rpx;
+  color: #333;
+}
+
+.subtext {
+  flex: 1;
+  text-align: right;
+  font-size: 24rpx;
+  color: #999;
+  margin-right: 20rpx;
+}
+
+.arrow {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.section {
+  background-color: #fff;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.badge-item {
+  width: 20%; 
+  margin-bottom: 20rpx; 
+  text-align: center;
+}
+
+.badge-item image {
+  width: 60rpx; 
+  height: 60rpx; 
+  margin-bottom: 8rpx; 
+}
+
+.badge-item text {
+  display: block;
+  font-size: 23rpx; 
+  color: #333;
+  margin-bottom: 3rpx; 
+}
+
+.desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.invite-options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.option-item {
+  width: 30%;
+  text-align: center;
+}
+
+.option-item image {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 15rpx;
+}
+
+.option-item text {
+  display: block;
+  font-size: 26rpx;
+  color: #333;
+}
+/* 弹窗通用样式 */
+.popup-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup {
+  background-color: #fff;
+  border-radius: 16rpx;
+  width: 80%;
+  max-width: 750rpx;
+  overflow: hidden;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 40rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.popup-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.close-btn {
+  font-size: 40rpx;
+  color: #999;
+}
+
+.popup-textarea {
+  padding: 30rpx;
+  font-size: 28rpx;
+  color: #333;
+  min-height: 200rpx;
+  line-height: 1.5;
+}
+
+.form-group {
+  padding: 30rpx;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 15rpx;
+}
+
+.form-input {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.form-picker {
+  width: 100%;
+}
+
+.picker-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 88rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.picker-value {
+  flex: 1;
+}
+
+.popup-actions {
+  display: flex;
+  padding: 20rpx 30rpx 30rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.btn-cancel, .btn-submit {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  margin: 0 15rpx;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-cancel {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.btn-submit {
+  background-color: #4f9aff;
+  color: #fff;
+}

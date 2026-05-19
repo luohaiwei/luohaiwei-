@@ -1,0 +1,150 @@
+/* pages/order-detail/index.wxss */
+.container {
+  padding: 30rpx;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loading-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.order-container {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 40rpx;
+}
+
+.order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  background-color: #f9f9f9;
+  border-bottom: 1rpx solid #eee;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+}
+
+.order-id {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 600;
+}
+
+.order-status {
+  font-size: 20rpx;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  font-weight: 500;
+}
+
+.order-status.pending {
+  background-color: #fff0f0;
+  color: #e64340;
+}
+
+.order-status.completed {
+  background-color: #f0fff0;
+  color: #52c41a;
+}
+
+.goods-section {
+  padding: 30rpx;
+}
+
+.goods-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.goods-image {
+  width: 150rpx;
+  height: 150rpx;
+  object-fit: cover;
+  border-radius: 10rpx;
+  margin-right: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.goods-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.goods-name {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 10rpx;
+}
+
+.goods-brand {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.goods-price {
+  font-size: 28rpx;
+  color: #e64340;
+  font-weight: 500;
+}
+
+.order-info {
+  padding: 30rpx;
+  border-top: 1rpx solid #eee;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15rpx 0;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.action-bar {
+  padding: 30rpx;
+  text-align: center;
+}
+
+.pay-button {
+  background-color: #e64340;
+  color: #fff;
+  border-radius: 50rpx;
+  font-size: 32rpx;
+  padding: 0 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 12rpx rgba(230, 67, 64, 0.3);
+  transition: all 0.3s ease;
+}
+
+.pay-button:hover {
+  background-color: #d63c39;
+  transform: scale(1.02);
+}

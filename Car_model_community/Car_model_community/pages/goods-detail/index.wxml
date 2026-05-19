@@ -1,0 +1,78 @@
+<!-- pages/goods-detail/index.wxml -->
+<view class="container">
+  <!-- 商品图片 -->
+  <view class="goods-image-container">
+    <image class="goods-image" src="{{goodsInfo.imageUrl}}" mode="widthFix" />
+  </view>
+  
+  <!-- 商品信息 -->
+  <view class="goods-info">
+    <text class="goods-name">{{goodsInfo.name}}</text>
+    <text class="goods-brand">{{goodsInfo.brand}}</text>
+    <text class="goods-price">¥{{goodsInfo.price}}</text>
+    
+    <!-- 商品详情区域 -->
+    <view class="detail-section">
+      <text class="section-title">商品详情</text>
+      <text class="detail-content">
+        {{goodsInfo.description || '暂无描述'}}
+      </text>
+    </view>
+    
+    <!-- 商品规格 -->
+    <view class="spec-section">
+      <view class="spec-item">
+        <text class="spec-label">商品型号</text>
+        <text class="spec-value">{{goodsInfo.modelNo || '无'}}</text>
+      </view>
+      <view class="spec-item">
+        <text class="spec-label">年份</text>
+        <text class="spec-value">{{goodsInfo.year || '无'}}</text>
+      </view>
+      <view class="spec-item">
+        <text class="spec-label">库存状态</text>
+        <text class="spec-value {{goodsInfo.stock > 0 ? 'in-stock' : 'out-of-stock'}}">
+          {{goodsInfo.stock > 0 ? '有货 (' + goodsInfo.stock + '件)' : '缺货'}}
+        </text>
+      </view>
+      <view class="spec-item">
+        <text class="spec-label">销售类型</text>
+        <text class="spec-value">{{goodsInfo.isPresale ? '预售商品' : '现货'}}</text>
+      </view>
+    </view>
+    
+    <!-- 购买信息 -->
+    <view class="purchase-info" wx:if="{{goodsInfo.isPresale}}">
+      <view class="info-item">
+        <text class="info-label">开始预售</text>
+        <text class="info-value">{{goodsInfo.presaleStart}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">截单时间</text>
+        <text class="info-value">{{goodsInfo.presaleEnd}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">官方发货</text>
+        <text class="info-value">{{goodsInfo.officialDelivery}}</text>
+      </view>
+    </view>
+    <!-- 服务保障 -->
+    <view class="service-guarantee">
+      <view class="service-item">
+        <text>官方包邮</text>
+      </view>
+      <view class="service-item">
+        <text>7天无理由退款</text>
+      </view>
+      <view class="service-item">
+        <text>专属客服售后</text>
+      </view>
+    </view>
+  </view>
+  <!-- 购买按钮 -->
+  <view class="action-bar">
+    <button class="cart-button" bindtap="addToCart">加入购物车</button>
+    <!-- 按钮绑定buyNow事件 -->
+    <button class="buy-button" bindtap="buyNow">立即购买</button>
+  </view>
+</view>

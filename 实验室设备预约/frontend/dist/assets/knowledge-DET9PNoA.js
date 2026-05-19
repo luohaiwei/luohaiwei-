@@ -1,0 +1,1 @@
+import{ac as a}from"./index-CjHT9mIy.js";const d=e=>a({url:"/ai/manage/list",method:"get",params:e}),s=e=>a({url:"/ai/manage",method:"post",data:e}),n=(e,t)=>a({url:`/ai/manage/${e}`,method:"put",data:t}),g=e=>a({url:`/ai/manage/${e}`,method:"delete"});export{s as a,g as d,d as g,n as u};

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索结果</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .user-nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .search-results {
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .search-header {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-title {
+            font-size: 24px;
+            color: var(--dark-color);
+        }
+
+        .search-keyword {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .results-table th, .results-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .results-table th {
+            background-color: #f8f9fa;
+            font-weight: 500;
+        }
+
+        .results-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container header-content">
+        <a href="/article/split/1" class="logo">社区论坛</a>
+        <div class="user-nav">
+                <span th:if="${session.users != null}">
+                    <span>你好，<span th:text="${session.users.userName}"></span></span>
+                    <a href="/to/page/update">个人中心</a>
+                    <a href="/article/myArticles/1">我的文章</a>
+                    <span th:unless="${session.users.isBanned}">
+                        <a href="/to/page/issue" class="btn">发帖</a>
+                    </span>
+                    <a href="/users/logout" onclick="return confirm('确定要退出登录吗？')" class="btn btn-danger">退出</a>
+                </span>
+            <span th:if="${session.users == null}">
+                    <a href="/" class="btn">登录</a>
+                </span>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <div class="search-results">
+        <div class="search-header">
+            <h1 class="search-title">搜索结果</h1>
+            <a href="/article/split/1" class="btn btn-secondary">返回首页</a>
+        </div>
+
+        <p>搜索关键词: <span class="search-keyword" th:text="${searchKeyword}"></span></p>
+
+        <div th:if="${articleList != null and !articleList.empty}">
+            <table class="results-table">
+                <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>发布时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="article : ${articleList}">
+                    <td>
+                        <a th:href="@{/article/show/{aId}(aId=${article.articleId})}"
+                           th:text="${article.articleTitle}"></a>
+                    </td>
+                    <td th:text="${article.articleTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${articleList == null or articleList.empty}" class="no-results">
+            <p>未找到相关文章</p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

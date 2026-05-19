@@ -1,0 +1,136 @@
+<view class="container">
+  <!-- 顶部搜索框 -->
+  <view class="search-container">
+    <view class="search-box">
+      <input 
+        type="text" 
+        placeholder="搜索模型、制造商、系列" 
+        class="search-input" 
+        bindinput="onSearchInput" 
+        value="{{searchKeyword}}"
+      />
+      <button class="search-btn" bindtap="onSearch">搜索</button>
+    </view>
+  </view>
+  
+  <!-- 分类标签 -->
+  <scroll-view scroll-x="true" class="category-scroll">
+    <view class="category-tags">
+      <view 
+        class="tag {{activeCategory === 'all' ? 'active' : ''}}" 
+        bindtap="switchCategory" 
+        data-category="all"
+      >
+        全部
+      </view>
+      <view 
+        class="tag {{activeCategory === '风火轮' ? 'active' : ''}}" 
+        bindtap="switchCategory" 
+        data-category="风火轮"
+      >
+        风火轮
+      </view>
+      <view 
+        class="tag {{activeCategory === '多美卡' ? 'active' : ''}}" 
+        bindtap="switchCategory" 
+        data-category="多美卡"
+      >
+        多美卡
+      </view>
+      <view 
+        class="tag {{activeCategory === 'MINI GT' ? 'active' : ''}}" 
+        bindtap="switchCategory" 
+        data-category="MINI GT"
+      >
+        MINI GT
+      </view>
+      <view 
+        class="tag {{activeCategory === 'INNO64' ? 'active' : ''}}" 
+        bindtap="switchCategory" 
+        data-category="INNO64"
+      >
+        INNO64
+      </view>
+      <view 
+        class="tag {{activeCategory === 'BBR' ? 'active' : ''}}" 
+        bindtap="switchCategory" 
+        data-category="BBR"
+      >
+        BBR
+      </view>
+      <view 
+        class="tag {{activeCategory === 'Tarmac' ? 'active' : ''}}" 
+        bindtap="switchCategory" 
+        data-category="Tarmac"
+      >
+        Tarmac
+      </view>
+    </view>
+  </scroll-view>
+  
+  <!-- 第一行：轮播图 + 推荐商品 -->
+  <view class="grid-container" wx:if="{{!isFiltering && filteredSwiperItems.length > 0 && (searchKeyword.length === 0)}}">
+    <!-- 达人轮播图 -->
+    <view class="swiper-container">
+      <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="3000">
+        <block wx:for="{{filteredSwiperItems}}" wx:key="index">
+          <swiper-item bindtap="goToUserSpace" data-index="{{index}}">
+            <image src="{{item.image}}" mode="aspectFill" class="swiper-image" />
+            <view class="expert-info">
+              <image src="{{item.avatar}}" class="expert-avatar"></image>
+              <view class="expert-details">
+                <text class="expert-name">{{item.name}}</text>
+                <text class="expert-title">{{item.title}}</text>
+              </view>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    
+    <!-- 推荐商品 -->
+    <view class="featured-product" wx:if="{{filteredFeaturedProduct}}" bindtap="onFeaturedProductTap">
+      <image src="{{filteredFeaturedProduct.image}}" mode="aspectFill" class="featured-product-image" />
+      <view class="featured-product-info">
+        <text class="featured-product-title">{{filteredFeaturedProduct.title}}</text>
+        <text class="featured-product-brand">{{filteredFeaturedProduct.brand}}</text>
+        <view class="featured-stats">
+          <text>{{filteredFeaturedProduct.wants}}人想要</text>
+          <text> • </text>
+          <text>{{filteredFeaturedProduct.haves}}人已有</text>
+        </view>
+        <button class="featured-i-have-btn" catchtap="handleHave" data-id="{{filteredFeaturedProduct.id}}">我有</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品网格 - 按照设计图布局 -->
+  <view class="products-grid">
+    <block wx:for="{{filteredProducts}}" wx:key="id">
+      <view class="product-card">
+        <image src="{{item.image}}" mode="aspectFill" class="product-image" bindtap="onProductTap" data-id="{{item.id}}" />
+        <view class="product-info">
+          <text class="product-title">{{item.title}}</text>
+          <text class="product-brand">{{item.brand}}</text>
+          <view class="product-actions">
+            <button class="i-have-btn" catchtap="handleHave" data-id="{{item.id}}">我有</button>
+            <!-- 绑定了 handleBuy 事件 -->
+            <button class="buy-btn" catchtap="handleBuy" data-id="{{item.id}}">购买</button>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  
+  <!-- 加载更多提示 -->
+  <view class="load-more-container">
+    <block wx:if="{{isLoading}}">
+      <image src="/images/loading.png" class="loading-icon" />
+      <text>正在加载...</text>
+    </block>
+    
+    <block wx:if="{{!hasMore}}">
+      <text>没有更多了</text>
+    </block>
+  </view>
+</view>

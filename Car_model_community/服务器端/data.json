@@ -1,0 +1,11 @@
+{
+    "videos": [
+        {
+            "id": 1,
+            "videoUrl": "http://127.0.0.1:3000/fd412803cdc90120053e73b7557ea46b.MP4",
+            "coverUrl": "",
+            "title": "",
+            "description": ""
+        }
+    ]
+}

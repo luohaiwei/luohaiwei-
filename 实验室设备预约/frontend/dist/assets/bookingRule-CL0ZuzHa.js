@@ -1,0 +1,1 @@
+import{ac as o}from"./index-CjHT9mIy.js";function r(){return o({url:"/booking-rule/global",method:"get"})}function t(e){return o({url:"/booking-rule/global",method:"put",data:e})}export{r as g,t as s};

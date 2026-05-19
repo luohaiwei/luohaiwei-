@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员登录</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            background-color: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .login-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .login-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .login-footer a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var adminCode = document.forms["adminLoginForm"]["adminCode"].value;
+            var adminPassword = document.forms["adminLoginForm"]["adminPassword"].value;
+
+            if (adminCode === "") {
+                alert("管理员账号不能为空");
+                return false;
+            }
+            if (adminPassword.length < 7) {
+                alert("密码不能小于七位数且不能为空");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+<div class="login-container">
+    <div class="login-header">
+        <h1>管理员登录</h1>
+        <p>管理员专属登录通道</p>
+    </div>
+
+    <form name="adminLoginForm" action="/admin/login" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="adminCode">管理员账号</label>
+            <input type="text" id="adminCode" name="adminCode" class="form-control" placeholder="请输入管理员账号">
+        </div>
+
+        <div class="form-group">
+            <label for="adminPassword">密码</label>
+            <input type="password" id="adminPassword" name="adminPassword" class="form-control" placeholder="请输入密码">
+        </div>
+
+        <button type="submit" class="btn">登录</button>
+    </form>
+
+    <div class="login-footer">
+        <p><a href="/">返回普通用户登录</a></p>
+    </div>
+</div>
+</body>
+</html>

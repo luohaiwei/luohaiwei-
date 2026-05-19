@@ -1,0 +1,292 @@
+/* pages/community/community.wxss */
+.container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20rpx;
+}
+
+/* 搜索栏样式 */
+.search-bar {
+  position: relative;
+  margin-bottom: 30rpx;
+}
+
+.search-bar input {
+  height: 80rpx;
+  background-color: #fff;
+  border-radius: 40rpx;
+  padding: 0 80rpx 0 40rpx;
+  font-size: 28rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.placeholder {
+  color: #999;
+}
+
+/* 清空按钮 */
+.clear-icon {
+  position: absolute;
+  right: 80rpx;
+  top: 22rpx;
+  width: 36rpx;
+  height: 36rpx;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 24rpx;
+}
+
+/* 搜索按钮 */
+.search-icon {
+  position: absolute;
+  right: 30rpx;
+  top: 22rpx;
+  width: 36rpx;
+  height: 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1E90FF;
+  font-size: 28rpx;
+}
+
+/* 搜索状态 */
+.search-status {
+  padding: 20rpx 30rpx;
+  font-size: 28rpx;
+  color: #666;
+  background-color: #f9f9f9;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 顶部轮播图样式 */
+.top-swiper {
+  height: 360rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.swiper-item {
+  position: relative;
+  height: 100%;
+}
+
+.swiper-image {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 30rpx;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  color: #fff;
+}
+
+.swiper-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.swiper-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  color: #eee;
+}
+
+/* 分区样式 */
+.section {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 25rpx;
+  color: #333;
+}
+
+/* 热门话题横向滚动样式 */
+.hot-topics-scroll {
+  white-space: nowrap;
+  width: 100%;
+  height: 190px;
+  padding-bottom: 20rpx;
+}
+
+.topic-card {
+  display: inline-block;
+  width: 400rpx;
+  margin-right: 20rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  vertical-align: top;
+}
+
+.topic-image {
+  width: 100%;
+  height: 280rpx;
+  display: block;
+}
+
+.topic-content {
+  padding: 20rpx;
+}
+
+.topic-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  height: 88rpx;
+  line-height: 44rpx;
+  margin-bottom: 15rpx;
+}
+
+.topic-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.topic-comment {
+  color: #1E90FF;
+}
+
+/* 分割线样式 */
+.divider {
+  height: 20rpx;
+  background-color: #f0f0f0;
+  margin: 0 -20rpx 30rpx;
+}
+
+/* 精彩内容网格布局 */
+.featured-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.featured-grid-item {
+  width: 48%;
+  margin-bottom: 30rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.grid-image {
+  width: 100%;
+  height: 280rpx;
+  display: block;
+}
+
+.grid-title {
+  display: block;
+  padding: 15rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.grid-info {
+  display: flex;
+  align-items: center;
+  padding: 0 15rpx 15rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.grid-avatar {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+
+.grid-author {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.grid-time {
+  color: #999;
+  font-size: 22rpx;
+}
+video {
+  width: 100%;
+  height: 280rpx;
+  display: block;
+}
+/* 加载更多样式 */
+.load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 0;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.loading-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-bottom: 10rpx;
+}
+
+/* 无结果提示 */
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0;
+  text-align: center;
+}
+
+.no-results-icon {
+  font-size: 80rpx;
+  margin-bottom: 30rpx;
+  color: #ccc;
+}
+
+.no-results text {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.no-results .tip {
+  font-size: 26rpx;
+  color: #999;
+}

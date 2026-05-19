@@ -1,0 +1,50 @@
+<view class="container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <image src="/images/loading.png" class="loading-icon"></image>
+    <text>加载中...</text>
+  </view>
+  
+  <!-- 内容区域 -->
+  <view wx:else>
+    <scroll-view class="content-wrapper" scroll-y>
+      <!-- 顶部图片 -->
+      <view class="car-header">
+        <image src="{{carInfo.imageUrl}}" mode="aspectFill" class="car-big-image"></image>
+      </view>
+      <!-- 车模基本信息 -->
+      <view class="car-basic-info">
+        <view class="info-item">
+          <text class="info-label">名称</text>
+          <text class="info-value">{{carInfo.name}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">品牌</text>
+          <text class="info-value">{{brandName}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">分类</text>
+          <text class="info-value">{{categoryName}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">库存</text>
+          <text class="info-value {{carInfo.stock <= 0 ? 'out-of-stock' : ''}}">
+            {{carInfo.stock > 0 ? carInfo.stock + '件' : '已售罄'}}
+          </text>
+        </view>
+      </view>
+
+      <!-- 车模描述 -->
+      <view class="car-description">
+        <view class="section-title">商品描述</view>
+        <text class="description-text">{{carInfo.description}}</text>
+      </view>
+    </scroll-view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="have-button" bindtap="handleHave">我有</button>
+      <button class="buy-button" bindtap="handleBuy">购买</button>
+    </view>
+  </view>
+</view>

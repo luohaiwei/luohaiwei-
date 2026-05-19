@@ -1,0 +1,142 @@
+/* pages/orders/orders.wxss */
+.container {
+  padding: 30rpx;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loading-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  padding: 40rpx;
+}
+
+.empty-icon {
+  width: 300rpx;
+  height: 300rpx;
+  margin-bottom: 40rpx;
+}
+
+.empty-text {
+  font-size: 36rpx;
+  color: #333;
+  margin-bottom: 30rpx;
+  font-weight: bold;
+}
+
+.empty-hint {
+  font-size: 32rpx;
+  color: #fff;
+  background-color: #e4393c;
+  border-radius: 50rpx;
+  padding: 0 80rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  margin-top: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(228, 57, 60, 0.3);
+}
+
+.orders-list {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.order-card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 40rpx;
+}
+
+.order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  background-color: #f9f9f9;
+  border-bottom: 1rpx solid #eee;
+}
+
+.order-id {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.order-status {
+  font-size: 30rpx;
+  font-weight: bold;
+  padding: 10rpx 24rpx;
+  border-radius: 30rpx;
+}
+
+.pending {
+  background-color: #fff0f0;
+  color: #e4393c;
+}
+
+.completed {
+  background-color: #f0fff0;
+  color: #52c41a;
+}
+
+.goods-preview {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 30rpx;
+  background-color: #fafafa;
+  border-radius: 12rpx;
+  margin: 20rpx;
+}
+
+.goods-thumb {
+  width: 160rpx;
+  height: 160rpx;
+  object-fit: contain;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  padding: 10rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.order-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-top: 1rpx solid #eee;
+}
+
+.total-price {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #e4393c;
+}
+
+.order-time {
+  font-size: 30rpx;
+  color: #666;
+}

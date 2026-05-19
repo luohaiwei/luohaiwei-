@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lab.reservation.mapper.KnowledgeGraphEdgeMapper">
+
+    <select id="selectAllVisible" resultType="com.lab.reservation.entity.KnowledgeGraphEdge">
+        SELECT * FROM knowledge_graph_edge
+        WHERE status = 1 AND deleted = 0
+        ORDER BY sort ASC, id ASC
+    </select>
+
+</mapper>

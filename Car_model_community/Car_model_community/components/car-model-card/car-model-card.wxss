@@ -1,0 +1,71 @@
+.car-model-card {
+  width: 48%;
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.car-image {
+  width: 100%;
+  height: 200rpx;
+}
+
+.info {
+  padding: 15rpx;
+}
+
+.name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brand {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+}
+
+.current-price {
+  font-size: 28rpx;
+  color: #FF4500;
+  font-weight: bold;
+  margin-right: 10rpx;
+}
+
+.original-price {
+  font-size: 22rpx;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.collect-btn {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+  width: 50rpx;
+  height: 50rpx;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collect-btn image {
+  width: 30rpx;
+  height: 30rpx;
+}

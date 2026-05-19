@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章管理 - 管理员</title>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2980b9;
+      --accent-color: #e74c3c;
+      --light-color: #ecf0f1;
+      --dark-color: #2c3e50;
+      --success-color: #2ecc71;
+      --warning-color: #f39c12;
+      --danger-color: #e74c3c;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .admin-header {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 15px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .admin-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    .admin-actions a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .admin-actions a:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .btn-logout {
+      background-color: var(--danger-color);
+    }
+
+    .btn-logout:hover {
+      background-color: #c0392b;
+    }
+
+    .page-title {
+      font-size: 24px;
+      color: var(--dark-color);
+      margin-bottom: 20px;
+    }
+
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .article-table th, .article-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .article-table th {
+      background-color: var(--dark-color);
+      color: white;
+      font-weight: 500;
+    }
+
+    .article-table tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .status-active {
+      color: var(--success-color);
+    }
+
+    .status-inactive {
+      color: var(--danger-color);
+    }
+
+    .action-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-links a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .action-links a:hover {
+      text-decoration: underline;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      gap: 5px;
+    }
+
+    .pagination a, .pagination span {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--primary-color);
+    }
+
+    .pagination a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .pagination .current {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .alert {
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .alert-error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+<div class="admin-header">
+  <div class="container admin-nav">
+    <div class="admin-title">管理员后台</div>
+    <div class="admin-actions">
+      <a href="/admin/userList/1">用户管理</a>
+      <a href="/admin/logout" class="btn-logout">退出登录</a>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <h1 class="page-title">文章管理列表</h1>
+
+  <!-- 消息提示 -->
+  <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+  <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+  <table class="article-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>标题</th>
+      <th>作者</th>
+      <th>发布时间</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="article : ${articleList}">
+      <td th:text="${article.articleId}"></td>
+      <td th:text="${article.articleTitle}"></td>
+      <td th:text="${article.userName}"></td>
+      <td th:text="${article.articleTime}"></td>
+      <td>
+                        <span th:class="'status-' + (${article.isActive} == 1 ? 'active' : 'inactive')"
+                              th:text="${article.isActive} == 1 ? '已上架' : '已下架'">
+                        </span>
+      </td>
+      <td>
+        <div class="action-links">
+          <a th:if="${article.isActive} == 0"
+             th:href="@{/admin/putOnSale/{aId}(aId=${article.articleId})}">
+            上架
+          </a>
+          <a th:if="${article.isActive} == 1"
+             th:href="@{/admin/takeOffSale/{aId}(aId=${article.articleId})}">
+            下架
+          </a>
+          <a th:href="@{/admin/articleDetail/{aId}(aId=${article.articleId})}">
+            查看
+          </a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination" th:if="${allPages > 1}">
+    <a th:if="${current > 1}"
+       th:href="@{/admin/articleList/{num}(num=${current - 1})}">上一页</a>
+
+    <span th:each="num : ${#numbers.sequence(1, allPages)}">
+                <a th:if="${num != current}"
+                   th:href="@{/admin/articleList/{num}(num=${num})}"
+                   th:text="${num}"></a>
+                <span th:if="${num == current}" class="current" th:text="${num}"></span>
+            </span>
+
+    <a th:if="${current < allPages}"
+       th:href="@{/admin/articleList/{num}(num=${current + 1})}">下一页</a>
+  </div>
+</main>
+</body>
+</html>

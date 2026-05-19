@@ -1,0 +1,65 @@
+{
+  "pages": [
+    "pages/explore/explore",
+    "pages/topic/detail",
+    "pages/post/detail",
+    "pages/Modelcar/Modelcar",
+    "pages/garage/garage",
+    "pages/community/community",
+    "pages/mall/mall",
+    "pages/me/me",
+    "pages/Talent/Talent",
+    "pages/goods-detail/index",
+    "pages/car-detail/index",
+    "pages/user-space/index",
+     "pages/order-detail/index",
+     "pages/orders/orders",
+     "pages/cart/cart"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "车模社",
+    "backgroundColor": "#f8f8f8"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1E90FF",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/Modelcar/Modelcar",
+        "text": "车模",
+        "iconPath": "images/tabbar/Modelcar.png",
+        "selectedIconPath": "images/tabbar/Modelcar1.png"
+      },
+      {
+        "pagePath": "pages/community/community",
+        "text": "社区",
+        "iconPath": "images/tabbar/community.png",
+        "selectedIconPath": "images/tabbar/community1.png"
+      },
+      {
+        "pagePath": "pages/explore/explore",
+        "text": "探索",
+        "iconPath": "images/tabbar/explore.png",
+        "selectedIconPath": "images/tabbar/explore1.png"
+      },
+      {
+        "pagePath": "pages/mall/mall",
+        "text": "商城",
+        "iconPath": "images/tabbar/mall.png",
+        "selectedIconPath": "images/tabbar/mall1.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "images/tabbar/me.png",
+        "selectedIconPath": "images/tabbar/me1.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

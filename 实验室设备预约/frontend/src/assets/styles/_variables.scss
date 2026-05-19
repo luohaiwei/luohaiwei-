@@ -1,0 +1,45 @@
+// 主题色
+$primary: #00D4FF;
+$primary-end: #7B61FF;
+$success: #00FF88;
+$warning: #FF9500;
+$danger: #FF4757;
+$info: #8B949E;
+
+// 背景色
+$bg-dark: #0D1117;
+$bg-card: #161B22;
+$bg-input: #21262D;
+$bg-hover: #1F2937;
+
+// 边框
+$border-color: #30363D;
+$border-hover: #00D4FF;
+
+// 文字
+$text-primary: #E6EDF3;
+$text-secondary: #8B949E;
+$text-placeholder: #6E7681;
+$text-disabled: #484F58;
+
+// 渐变
+$bg-gradient: linear-gradient(135deg, #0D1117 0%, #1A1F35 100%);
+$btn-gradient: linear-gradient(90deg, #00D4FF 0%, #7B61FF 100%);
+
+// 发光效果
+$glow-primary: 0 0 20px rgba(0, 212, 255, 0.4);
+$glow-success: 0 0 8px rgba(0, 255, 136, 0.4);
+$glow-warning: 0 0 8px rgba(255, 149, 0, 0.4);
+$glow-danger: 0 0 8px rgba(255, 71, 87, 0.4);
+$glow-card: 0 0 20px rgba(0, 212, 255, 0.15);
+
+// 尺寸
+$header-height: 60px;
+$sidebar-width: 200px;
+$sidebar-collapsed: 64px;
+$card-radius: 12px;
+$btn-radius: 8px;
+
+// 过渡
+$transition-base: all 0.3s ease;
+$transition-fast: all 0.15s ease;

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的文章</title>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2980b9;
+      --accent-color: #e74c3c;
+      --light-color: #ecf0f1;
+      --dark-color: #2c3e50;
+      --success-color: #2ecc71;
+      --warning-color: #f39c12;
+      --danger-color: #e74c3c;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 15px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+
+    .user-nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-nav a {
+      color: white;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .user-nav a:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+
+    .page-header {
+      margin: 30px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .page-title {
+      font-size: 24px;
+      color: var(--dark-color);
+    }
+
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .article-table th, .article-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .article-table th {
+      background-color: var(--dark-color);
+      color: white;
+      font-weight: 500;
+    }
+
+    .article-table tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .status-active {
+      color: var(--success-color);
+    }
+
+    .status-inactive {
+      color: var(--danger-color);
+    }
+
+    .action-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-links a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .action-links a:hover {
+      text-decoration: underline;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      gap: 5px;
+    }
+
+    .pagination a, .pagination span {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--primary-color);
+    }
+
+    .pagination a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .pagination .current {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container header-content">
+    <a href="/article/split/1" class="logo">社区论坛</a>
+    <div class="user-nav">
+                <span th:if="${session.users != null}">
+                    <span>你好，<span th:text="${session.users.userName}"></span></span>
+                    <a href="/to/page/update">个人中心</a>
+                    <a href="/article/myArticles/1">我的文章</a>
+                    <span th:unless="${session.users.isBanned}">
+                        <a href="/to/page/issue" class="btn">发帖</a>
+                    </span>
+                    <a href="/users/logout" onclick="return confirm('确定要退出登录吗？')" class="btn btn-danger">退出</a>
+                </span>
+      <span th:if="${session.users == null}">
+                    <a href="/" class="btn">登录</a>
+                </span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="page-header">
+    <h1 class="page-title">我的文章列表</h1>
+    <a href="/article/split/1" class="btn btn-secondary">返回首页</a>
+  </div>
+
+  <table class="article-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>标题</th>
+      <th>发布时间</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="article : ${articleList}">
+      <td th:text="${article.articleId}"></td>
+      <td>
+        <a th:href="@{/article/show/{aId}(aId=${article.articleId})}"
+           th:text="${article.articleTitle}"></a>
+      </td>
+      <td th:text="${article.articleTime}"></td>
+      <td>
+        <span th:if="${article.isActive} == 1" class="status-active">已上架</span>
+        <span th:if="${article.isActive} == 0" class="status-inactive">已下架</span>
+      </td>
+      <td>
+        <div class="action-links">
+          <a th:href="@{/article/show/{aId}(aId=${article.articleId})}">查看</a>
+          <a th:href="@{/article/articleUpdate/{aId}(aId=${article.articleId})}">修改</a>
+          <a th:href="@{/article/delete/{aId}(aId=${article.articleId})}"
+             onclick="return confirm('确定要删除这篇文章吗？')">删除</a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination" th:if="${allPages > 1}">
+    <a th:if="${current > 1}" th:href="@{/article/myArticles/{num}(num=${current - 1})}">上一页</a>
+
+    <span th:each="num : ${#numbers.sequence(1, allPages)}">
+                <a th:if="${num != current}"
+                   th:href="@{/article/myArticles/{num}(num=${num})}"
+                   th:text="${num}"></a>
+                <span th:if="${num == current}" class="current" th:text="${num}"></span>
+            </span>
+
+    <a th:if="${current < allPages}" th:href="@{/article/myArticles/{num}(num=${current + 1})}">下一页</a>
+  </div>
+</main>
+</body>
+</html>

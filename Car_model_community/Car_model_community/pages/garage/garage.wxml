@@ -1,0 +1,111 @@
+<view class="container">
+  <!-- 表单区域 - 入库新车模 -->
+  <view class="form-container" wx:if="{{showForm}}">
+    <view class="form-title">加入车库</view>
+    
+    <!-- 图片上传区域 -->
+    <view class="form-item">
+      <text class="form-label">车模图片</text>
+      <view class="image-upload" bindtap="chooseImage">
+        <image wx:if="{{tempImagePath}}" src="{{tempImagePath}}" mode="aspectFill" class="uploaded-image" />
+        <view wx:else class="upload-placeholder">
+          <text>点击上传图片</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 表单字段 -->
+    <view class="form-item">
+      <text class="form-label">车模品牌</text>
+      <input 
+          class="form-input" 
+          placeholder="风火轮" 
+          value="{{formData.brand}}"
+          bindinput="onFormInput"
+          data-field="brand"
+        />
+    </view>
+    
+    <view class="form-item">
+      <text class="form-label">车模名称</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入车模名称" 
+        value="{{formData.name}}"
+        bindinput="onFormInput"
+        data-field="name"
+      />
+    </view>
+    
+    <view class="form-item">
+      <text class="form-label">车模编号</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入车模编号" 
+        value="{{formData.number}}"
+        bindinput="onFormInput"
+        data-field="number"
+      />
+    </view>
+    
+    <view class="form-item">
+      <text class="form-label">出产年份</text>
+      <picker 
+        class="form-input" 
+        mode="date" 
+        fields="year" 
+        value="{{formData.year}}"
+        bindchange="onYearChange"
+      >
+        <view class="picker-view">
+          {{formData.year || '请选择出产年份'}}
+          <image class="arrow-down" />
+        </view>
+      </picker>
+    </view>
+    
+    <button class="submit-btn" bindtap="submitForm">确认入库</button>
+    
+    <!--查看已有车模的按钮 -->
+    <view class="view-garage-btn" bindtap="viewGarage">
+      <text>查看我的车模</text>
+    </view>
+  </view>
+
+  <!-- 车库内容区域 -->
+  <view class="garage-content" wx:if="{{!showForm}}">
+    <view class="header">
+      <text class="title">我的车模</text>
+      <view class="add-btn" bindtap="addNewCar">添加入库</view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{carModels.length === 0}}">
+      <image class="empty-icon" src="/images/empty-garage.png" />
+      <text class="empty-text">车库空空如也</text>
+      <text class="empty-hint">快去添加入库新车模吧</text>
+      <view class="add-first-btn" bindtap="addNewCar">添加入库</view>
+    </view>
+
+    <!-- 车模列表 -->
+    <view class="car-model-list" wx:if="{{carModels.length > 0}}">
+      <view 
+        wx:for="{{carModels}}" 
+        wx:key="id" 
+        class="car-model-card"
+        bindtap="onCarModelTap"
+        data-id="{{item.id}}"
+      >
+        <image class="car-image" src="{{item.image}}" mode="aspectFill" />
+        <view class="car-info">
+          <text class="car-name">{{item.name}}</text>
+          <text class="car-brand">{{item.brand}}</text>
+          <view class="car-meta">
+            <text class="car-number">编号: {{item.number || '暂无编号'}}</text>
+            <text class="car-year">年份: {{item.year || '暂无年份'}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

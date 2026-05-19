@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lab.reservation.mapper.AiChatLogMapper">
+
+    <sql id="AuditWhere">
+        FROM ai_chat_log l
+        LEFT JOIN sys_user u ON l.user_id = u.id AND u.deleted = 0
+        LEFT JOIN knowledge_base k ON l.knowledge_id = k.id
+        WHERE 1 = 1
+        <if test="username != null and username != ''">
+            AND u.username LIKE CONCAT('%', #{username}, '%')
+        </if>
+        <if test="userType != null and userType != ''">
+            AND u.user_type = #{userType}
+        </if>
+        <if test="kbCategory != null and kbCategory != ''">
+            AND k.category = #{kbCategory}
+        </if>
+        <if test="quality != null and quality != ''">
+            AND (
+            <choose>
+                <when test="quality == 'NORMAL'">
+                    (l.knowledge_id IS NOT NULL AND (l.confidence IS NULL OR l.confidence &gt;= 0.3))
+                </when>
+                <when test="quality == 'ABNORMAL'">
+                    (l.knowledge_id IS NULL)
+                </when>
+                <when test="quality == 'LOW_QUALITY'">
+                    (l.confidence IS NOT NULL AND l.confidence &lt; 0.3)
+                </when>
+                <otherwise>1=1</otherwise>
+            </choose>
+            )
+        </if>
+        <if test="startTime != null">
+            AND l.create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND l.create_time &lt;= #{endTime}
+        </if>
+    </sql>
+
+    <select id="selectAuditPage" resultType="com.lab.reservation.entity.AiChatLog">
+        SELECT
+            l.id,
+            l.user_id,
+            l.question,
+            l.answer,
+            l.knowledge_id,
+            l.device_id,
+            l.confidence,
+            l.response_time,
+            l.create_time,
+            u.username,
+            u.user_type AS userType,
+            (CASE k.category
+                WHEN '设备操作手册' THEN 'DEVICE_OPERATION'
+                WHEN '实验流程' THEN 'EXPERIMENT_PROCESS'
+                WHEN '安全规范' THEN 'SAFETY'
+                WHEN '故障排查' THEN 'TROUBLESHOOTING'
+                ELSE 'DEVICE_OPERATION' END) AS sessionType,
+            (CASE
+                WHEN l.knowledge_id IS NULL THEN 'ABNORMAL'
+                WHEN l.confidence IS NOT NULL AND l.confidence &lt; 0.3 THEN 'LOW_QUALITY'
+                ELSE 'NORMAL' END) AS quality
+        <include refid="AuditWhere"/>
+        ORDER BY l.create_time DESC
+    </select>
+
+    <select id="selectAuditStats" resultType="java.util.Map">
+        SELECT
+            COUNT(*) AS total,
+            SUM(CASE WHEN l.knowledge_id IS NOT NULL AND (l.confidence IS NULL OR l.confidence &gt;= 0.3) THEN 1 ELSE 0 END) AS normal,
+            SUM(CASE WHEN l.knowledge_id IS NULL THEN 1 ELSE 0 END) AS abnormal,
+            SUM(CASE WHEN l.confidence IS NOT NULL AND l.confidence &lt; 0.3 THEN 1 ELSE 0 END) AS lowQuality,
+            SUM(CASE WHEN l.answer LIKE '%⚠️%' OR l.answer LIKE '%安全警告%' THEN 1 ELSE 0 END) AS safetyAlert
+        <include refid="AuditWhere"/>
+    </select>
+</mapper>

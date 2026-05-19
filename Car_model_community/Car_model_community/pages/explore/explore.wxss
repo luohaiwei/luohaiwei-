@@ -1,0 +1,249 @@
+.explore-container {
+  background-color: #f8f8f8;
+  padding: 20rpx;
+  min-height: 100vh;
+  padding-bottom: 120rpx;
+  box-sizing: border-box;
+}
+
+/* 顶部照片区域 */
+.banner {
+  height: 360rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 搜索栏 */
+.search-bar {
+  position: relative;
+  margin-bottom: 30rpx;
+}
+
+.search-input {
+  height: 80rpx;
+  background-color: #fff;
+  border-radius: 40rpx;
+  padding: 0 80rpx 0 30rpx;
+  font-size: 28rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.placeholder-style {
+  color: #999;
+}
+
+.search-icon {
+  position: absolute;
+  right: 30rpx;
+  top: 22rpx;
+  width: 36rpx;
+  height: 36rpx;
+}
+
+/* 功能导航区样式 */
+.feature-nav {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.feature-item {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+/* 图标容器 - 圆形背景 */
+.feature-icon-container {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+.feature-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.feature-text {
+  font-size: 24rpx;
+  color: #333;
+  text-align: center;
+}
+
+/* 通用区块样式 */
+.section {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 25rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.more-link {
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* 热门商品 - 横向滑动 */
+.hot-goods-scroll {
+  white-space: nowrap;
+  width: 100%;
+  padding-bottom: 20rpx;
+}
+
+.hot-goods {
+  display: inline-flex;
+}
+
+.goods-card {
+  display: inline-block;
+  width: 220rpx;
+  margin-right: 20rpx;
+}
+
+.goods-image {
+  width: 100%;
+  height: 220rpx;
+  border-radius: 15rpx;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+.goods-name {
+  font-size: 26rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+.goods-price {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #E63946;
+}
+
+/* 精彩内容网格布局 */
+.featured-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.featured-grid-item {
+  width: 48%;
+  margin-bottom: 30rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.grid-image {
+  width: 100%;
+  height: 280rpx;
+  display: block;
+}
+
+.grid-title {
+  display: block;
+  padding: 15rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.grid-info {
+  display: flex;
+  align-items: center;
+  padding: 0 15rpx 15rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.grid-avatar {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+
+.grid-author {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.grid-time {
+  color: #999;
+  font-size: 22rpx;
+}
+
+/* 加载更多样式 */
+.load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 0;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.loading-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-bottom: 10rpx;
+}
+
+.search-btn {
+  position: absolute;
+  right: 30rpx;
+  top: 22rpx;
+  background-color: #1E90FF;
+  color: white;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+  padding: 0 30rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+}

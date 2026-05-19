@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布新文章</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .issue-container {
+            background-color: white;
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .issue-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .issue-header h1 {
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .textarea-control {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            line-height: 1.6;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var articleContent = document.forms[0]["articleContent"].value;
+            if (articleContent === "") {
+                alert("文章内容不能为空，请输入内容后再发布。");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+<div class="issue-container">
+    <div class="issue-header">
+        <h1>发布新文章</h1>
+        <p>分享你的想法和知识</p>
+    </div>
+
+    <form action="/article/issueOP" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="articleTitle">标题</label>
+            <input type="text" id="articleTitle" name="articleTitle" class="form-control" placeholder="请输入文章标题">
+        </div>
+
+        <div class="form-group">
+            <label for="articleContent">内容</label>
+            <textarea id="articleContent" name="articleContent" class="textarea-control" placeholder="请输入文章内容..."></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn">发布</button>
+            <a href="/article/split/1" class="btn btn-secondary">返回首页</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

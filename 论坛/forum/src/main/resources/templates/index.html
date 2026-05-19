@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>论坛首页</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .user-nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .search-bar {
+            background-color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .article-list {
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .article-item {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s;
+        }
+
+        .article-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .article-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+            text-decoration: none;
+            display: block;
+        }
+
+        .article-meta {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .article-excerpt {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .status-active {
+            color: var(--success-color);
+        }
+
+        .status-inactive {
+            color: var(--danger-color);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            gap: 5px;
+        }
+
+        .pagination a, .pagination span {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .pagination a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .pagination .current {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+    <script>
+        function checkBanned() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var msg = urlParams.get('msg');
+            if (msg === 'banned') {
+                alert('你已被禁言，无法发布文章或回复');
+            }
+        }
+
+        function confirmLogout() {
+            return confirm('确定要退出登录吗？');
+        }
+
+        window.onload = checkBanned;
+    </script>
+</head>
+<body>
+<header>
+    <div class="container header-content">
+        <a href="/article/split/1" class="logo">社区论坛</a>
+        <div class="user-nav">
+                <span th:if="${session.users != null}">
+                    <span>你好，<span th:text="${session.users.userName}"></span></span>
+                    <a href="/to/page/update">个人中心</a>
+                    <a href="/article/myArticles/1">我的文章</a>
+                    <span th:unless="${session.users.isBanned}">
+                        <a href="/to/page/issue" class="btn">发帖</a>
+                    </span>
+                    <a href="/users/logout" onclick="return confirmLogout()" class="btn btn-danger">退出</a>
+                </span>
+            <span th:if="${session.users == null}">
+                    <a href="/" class="btn">登录</a>
+                </span>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <!-- 消息提示 -->
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+    <!-- 搜索框 -->
+    <div class="search-bar">
+        <form class="search-form" action="/article/search" method="get">
+            <input type="text" name="keyword" placeholder="搜索文章标题...">
+            <button type="submit" class="btn">搜索</button>
+        </form>
+    </div>
+
+    <!-- 文章列表 -->
+    <div class="article-list">
+        <div th:if="${articleList != null}">
+            <div th:each="article : ${articleList}" class="article-item">
+                <a th:href="@{/article/show/{aId}(aId = ${article.articleId})}"
+                   class="article-title" th:text="${article.articleTitle}"></a>
+                <div class="article-meta">
+                    <span>作者: <span th:text="${article.userName}"></span></span> |
+                    <span>时间: <span th:text="${article.articleTime}"></span></span> |
+                    <span th:if="${article.isActive} == 1" class="status-active">已上架</span>
+                    <span th:if="${article.isActive} == 0" class="status-inactive">已下架</span>
+                </div>
+                <p class="article-excerpt" th:text="${#strings.abbreviate(article.articleContent, 100)}"></p>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination" th:if="${allPages > 1}">
+                <a th:if="${current > 1}" th:href="@{/article/split/{num}(num=${current - 1})}">上一页</a>
+                <span th:each="num : ${#numbers.sequence(1, allPages)}">
+                        <a th:if="${num != current}" th:href="@{/article/split/{num}(num=${num})}" th:text="${num}"></a>
+                        <span th:if="${num == current}" class="current" th:text="${num}"></span>
+                    </span>
+                <a th:if="${current < allPages}" th:href="@{/article/split/{num}(num=${current + 1})}">下一页</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

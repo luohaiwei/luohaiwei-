@@ -1,0 +1,75 @@
+<view class="explore-container">
+  <!-- 顶部照片区域 -->
+  <view class="banner">
+    <image class="banner-image" src="/images/explore_photos/banner.png" mode="aspectFill" />
+  </view>
+  <!-- 功能导航区 -->
+  <view class="feature-nav">
+    <view 
+      class="feature-item" 
+      wx:for="{{features}}" 
+      wx:key="id"
+      bindtap="navigateToFeature"
+      data-feature="{{item.id}}"
+    >
+      <view class="feature-icon-container" style="background-color: {{item.bgColor}}">
+        <image class="feature-icon" src="{{item.icon}}" />
+      </view>
+      <text class="feature-text">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 热门商品 - 为横向滑动 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">热门商品</text>
+      <text class="more-link" bindtap="viewMoreHotGoods">更多 ></text>
+    </view>
+    
+    <scroll-view class="hot-goods-scroll" scroll-x>
+      <view class="hot-goods">
+        <view 
+          class="goods-card" 
+          wx:for="{{hotGoods}}" 
+          wx:key="id"
+          bindtap="viewGoodsDetail"
+          data-id="{{item.id}}"
+        >
+          <image class="goods-image" src="{{item.imageUrl}}" mode="aspectFill" />
+          <text class="goods-name">{{item.name}}</text>
+          <text class="goods-price">¥{{item.price}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 精彩内容区域 -->
+  <view class="section">
+    <view class="featured-grid">
+      <view 
+        class="featured-grid-item" 
+        wx:for="{{featuredPosts}}" 
+        wx:key="id"
+        bindtap="onFeaturedTap"
+        data-id="{{item.id}}"
+      >
+        <image src="{{item.image}}" class="grid-image" mode="aspectFill" />
+        <text class="grid-title">{{item.title}}</text>
+        <view class="grid-info">
+          <image src="{{item.user.avatar}}" class="grid-avatar" />
+          <text class="grid-author">{{item.user.name}}</text>
+          <text class="grid-time">{{item.publishTime.split(' ')[0]}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 加载提示 -->
+    <view class="load-more" wx:if="{{isLoading}}">
+      <image src="/images/loading.png" class="loading-icon" />
+      <text>加载中...</text>
+    </view>
+    <view class="load-more" wx:if="{{!hasMore}}">
+      <text>没有更多内容了</text>
+    </view>
+  </view>
+</view>

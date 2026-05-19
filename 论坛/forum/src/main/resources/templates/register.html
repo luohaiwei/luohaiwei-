@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .register-container {
+            background-color: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .register-header h1 {
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .register-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .register-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .register-footer a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f8d7da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var userName = document.forms["registerForm"]["userName"].value;
+            var userEmail = document.forms["registerForm"]["userEmail"].value;
+            var userPassword = document.forms["registerForm"]["userPassword"].value;
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            var genders = document.getElementsByName('userGender');
+            var isGenderSelected = false;
+
+            for (var i = 0; i < genders.length; i++) {
+                if (genders[i].checked) {
+                    isGenderSelected = true;
+                    break;
+                }
+            }
+
+            if (userName === "") {
+                alert("用户名不能为空");
+                return false;
+            }
+            if (userEmail === "") {
+                alert("邮箱不能为空");
+                return false;
+            }
+            if (!emailRegex.test(userEmail)) {
+                alert("请输入有效的邮箱地址（如123@qq.com）");
+                return false;
+            }
+            if (userPassword.length < 7) {
+                alert("密码不能小于七位数且不能为空");
+                return false;
+            }
+            if (!isGenderSelected) {
+                alert("请选择您的性别");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+<div class="register-container">
+    <div class="register-header">
+        <h1>用户注册</h1>
+        <p>加入我们的社区</p>
+    </div>
+
+    <!-- 错误提示 -->
+    <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+
+    <form name="registerForm" action="/users/registerServer" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="userName">用户名</label>
+            <input type="text" id="userName" name="userName" class="form-control" placeholder="请输入您的用户名">
+        </div>
+
+        <div class="form-group">
+            <label for="userEmail">邮箱</label>
+            <input type="text" id="userEmail" name="userEmail" class="form-control" placeholder="请输入您的邮箱">
+        </div>
+
+        <div class="form-group">
+            <label for="userPassword">密码</label>
+            <input type="password" id="userPassword" name="userPassword" class="form-control" placeholder="请输入至少7位密码">
+        </div>
+
+        <div class="form-group">
+            <label>性别</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="male" name="userGender" value="male">
+                    <label for="male">男</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="female" name="userGender" value="female">
+                    <label for="female">女</label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">注册</button>
+    </form>
+
+    <div class="register-footer">
+        <p>已有账号？<a href="/">立即登录</a></p>
+    </div>
+</div>
+</body>
+</html>

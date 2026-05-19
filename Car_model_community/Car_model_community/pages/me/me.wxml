@@ -1,0 +1,164 @@
+<!-- pages/me/me.wxml -->
+<view class="container">
+  <!-- 用户信息 -->
+  <view class="user-info">
+    <image class="avatar" src="/images/avatar/avatar1.png"></image>
+    <view class="info">
+      <text class="nickname">{{isLoggedIn ? userInfo.nickname : '未登录'}}</text>
+      <text class="id">ID: {{isLoggedIn ? userInfo.id : '无'}}</text>
+      <text class="join-date">{{isLoggedIn ? userInfo.joinDate + ' 加入车模社' : ''}}</text>
+    </view>
+    <button wx:if="{{!isLoggedIn}}" bindtap="login">登录</button>
+    <button wx:if="{{isLoggedIn}}" bindtap="logout">退出登录</button>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="stats">
+    <view class="stat-item" bindtap="showPopup" data-type="follow">
+      <text class="value">{{followCount}}</text>
+      <text class="label">关注</text>
+    </view>
+    <view class="stat-item" bindtap="showPopup" data-type="fan">
+      <text class="value">{{fanCount}}</text>
+      <text class="label">粉丝</text>
+    </view>
+    <view class="stat-item" bindtap="showPopup" data-type="like">
+      <text class="value">{{likeCount}}</text>
+      <text class="label">获赞</text>
+    </view>
+    <view class="stat-item" bindtap="navigateToGarage">
+      <text class="value">{{garageCount}}</text>
+      <text class="label">车模</text>
+    </view>
+    <view class="stat-item" bindtap="navigateToCart">
+      <text class="value">{{cartCount}}</text>
+      <text class="label">购物车</text>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="menu">
+    <view class="menu-item" bindtap="navigateToGarage">
+      <text>我的车库</text>
+      <text class="subtext">已拥有{{garageCount}}辆车模</text>
+      <image class="arrow" src="/images/explore_photos/garage-icon.png"></image>
+    </view>
+    <view class="menu-item" bindtap="navigateToCart">
+      <text>购物车</text>
+      <text class="subtext">有{{cartCount}}件商品待结算</text>
+      <image class="arrow" src="/images/my_picture/icon-cart.png"></image>
+    </view>
+    <view class="menu-item" bindtap="navigateToOrders">
+      <text>订单</text>
+      <text class="subtext">查看我的订单（共{{orderCount}}个）</text>
+      <image class="arrow" src="/images/my_picture/icon-order.png"></image>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="badges">
+      <view class="badge-item" bindtap="navigateToAddCar">
+        <image src="/images/explore_photos/garage-icon.png"></image>
+        <text>爱车入库</text>
+        <text class="desc">上传我的车模</text>
+      </view>
+      <view class="badge-item" bindtap="showAboutUs">
+        <image src="/images/my_picture/About_us.png"></image>
+        <text>关于我们</text>
+        <text class="desc">了解更多信息</text>
+      </view>
+      <view class="badge-item" bindtap="showCarSupplement">
+        <image src="/images/my_picture/supplement.png"></image>
+        <text>车模补充</text>
+        <text class="desc">补充未找到的车</text>
+      </view>
+      <view class="badge-item" bindtap="showFeedback">
+        <image src="/images/my_picture/Feedback.png"></image>
+        <text>意见反馈</text>
+        <text class="desc">期待您的建议</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 意见反馈弹窗 -->
+  <view class="popup-mask" wx:if="{{showFeedbackPopup}}">
+    <view class="popup">
+      <view class="popup-header">
+        <text class="popup-title">意见反馈</text>
+        <view class="close-btn" bindtap="hideFeedback">×</view>
+      </view>
+      <textarea 
+        class="popup-textarea" 
+        placeholder="请输入您的意见和建议（如功能建议、问题反馈等）" 
+        value="{{feedbackContent}}"
+        bindinput="onFeedbackInput"
+        confirm-type="send"
+        bindconfirm="submitFeedback"
+      ></textarea>
+      <view class="popup-actions">
+        <button class="btn-cancel" bindtap="hideFeedback">取消</button>
+        <button class="btn-submit" bindtap="submitFeedback">提交</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 车模补充弹窗 -->
+  <view class="popup-mask" wx:if="{{showCarSupplementPopup}}">
+    <view class="popup">
+      <view class="popup-header">
+        <text class="popup-title">车模补充</text>
+        <view class="close-btn" bindtap="hideCarSupplement">×</view>
+      </view>
+      <view class="form-group">
+        <view class="form-item">
+          <label class="form-label">车模品牌</label>
+          <input 
+            class="form-input" 
+            placeholder="例如：风火轮、多美卡" 
+            value="{{carSupplementForm.brand}}"
+            bindinput="onCarSupplementInput"
+            data-field="brand"
+          />
+        </view>
+        <view class="form-item">
+          <label class="form-label">车模名称</label>
+          <input 
+            class="form-input" 
+            placeholder="例如：保时捷911 GT3 RS" 
+            value="{{carSupplementForm.name}}"
+            bindinput="onCarSupplementInput"
+            data-field="name"
+          />
+        </view>
+        <view class="form-item">
+          <label class="form-label">车模编号</label>
+          <input 
+            class="form-input" 
+            placeholder="例如：HW64-001" 
+            value="{{carSupplementForm.number}}"
+            bindinput="onCarSupplementInput"
+            data-field="number"
+          />
+        </view>
+        <view class="form-item">
+          <label class="form-label">出产年份</label>
+          <picker 
+            class="form-picker" 
+            mode="date" 
+            fields="year" 
+            value="{{carSupplementForm.year}}"
+            bindchange="onCarSupplementYearChange"
+          >
+            <view class="picker-wrapper">
+              <text class="picker-value">{{carSupplementForm.year || '请选择年份'}}</text>
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="popup-actions">
+        <button class="btn-cancel" bindtap="hideCarSupplement">取消</button>
+        <button class="btn-submit" bindtap="submitCarSupplement">提交</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,151 @@
+<!-- pages/community/community.wxml -->
+<view class="container">
+  <!-- 顶部搜索栏 -->
+  <view class="search-bar">
+    <input 
+      type="text" 
+      placeholder="搜索帖子" 
+      placeholder-class="placeholder"
+      bindinput="onSearchInput"
+      value="{{searchKeyword}}"
+      confirm-type="search"
+      bindconfirm="onSearch"
+    />
+    <!-- 清空按钮 -->
+    <view 
+      class="clear-icon" 
+      wx:if="{{showClear}}"
+      bindtap="clearSearch"
+    >
+      ✕
+    </view>
+    <!-- 搜索按钮 -->
+    <view class="search-icon" bindtap="onSearch">
+      🔍
+    </view>
+  </view>
+
+  <!-- 搜索状态提示 -->
+  <view class="search-status" wx:if="{{isSearching}}">
+    <text>搜索"{{searchKeyword}}"的结果 ({{filteredFeaturedPosts.length}}条)</text>
+  </view>
+
+  <!-- 内容区域 - 非搜索状态显示 -->
+  <block wx:if="{{!isSearching}}">
+    <!-- 顶部轮播图 -->
+    <swiper class="top-swiper" autoplay interval="3000" circular indicator-dots>
+      <swiper-item 
+        wx:for="{{topSwiperItems}}" 
+        wx:key="id"
+        bindtap="onSwiperTap"
+        data-index="{{index}}"
+      >
+        <view class="swiper-item">
+          <image src="{{item.image}}" class="swiper-image" mode="aspectFill" />
+          <view class="swiper-info">
+            <text class="swiper-title">{{item.title}}</text>
+            <view class="swiper-meta">
+              <text>{{item.author}}</text>
+              <text>💬️ {{item.commentCount}}</text>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <!-- 热门话题卡片轮播 -->
+    <view class="section">
+      <view class="section-title">热门话题</view>
+      <scroll-view class="hot-topics-scroll" scroll-x>
+        <view 
+          class="topic-card" 
+          wx:for="{{hotTopics}}" 
+          wx:key="id"
+          bindtap="onHotTopicTap"
+          data-id="{{item.id}}"
+        >
+          <image src="{{item.image}}" class="topic-image" mode="aspectFill" />
+          <view class="topic-content">
+            <text class="topic-title">{{item.title}}</text>
+            <view class="topic-meta">
+              <text class="topic-author">{{item.author}}</text>
+              <text class="topic-comment">💬️ {{item.commentCount}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 分割线 -->
+    <view class="divider"></view>
+
+    <!-- 精彩内容 -->
+    <view class="section">
+      <view class="section-title">精彩内容</view>
+      <view class="featured-grid">
+    <view 
+        class="featured-grid-item" 
+        wx:for="{{featuredPosts}}" 
+        wx:key="id"
+        bindtap="onFeaturedTap"
+        data-id="{{item.id}}"
+    >
+        <!-- 如果有视频，显示视频组件；否则，显示图片 -->
+        <block wx:if="{{item.video}}">
+          <!-- 确保 item.image 是网络地址 -->
+          <video src="{{item.video}}" poster="{{item.image}}" mode="aspectFill" bindtap="onVideoTap" data-id="{{item.id}}"></video>
+          </block>
+          <block wx:else>
+            <image src="{{item.image}}" class="grid-image" mode="aspectFill" />
+          </block>
+          <text class="grid-title">{{item.title}}</text>
+          <view class="grid-info">
+              <image src="{{item.user.avatar || '/images/avatar/avatar2.png'}}" class="grid-avatar" />
+              <text class="grid-author">{{item.user.name}}</text>
+              <text class="grid-time">{{item.publishTime.split(' ')[0]}}</text>
+          </view>
+      </view>
+  </view>
+      
+      <!-- 加载提示 -->
+      <view class="load-more" wx:if="{{isLoading}}">
+        <image src="/images/loading.png" class="loading-icon" />
+        <text>加载中...</text>
+      </view>
+      <view class="load-more" wx:if="{{!hasMore}}">
+        <text>没有更多内容了</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 搜索结果区域 -->
+  <block wx:else>
+    <view class="section">
+      <view class="section-title">搜索结果</view>
+      <view class="featured-grid">
+        <view 
+          class="featured-grid-item" 
+          wx:for="{{filteredFeaturedPosts}}" 
+          wx:key="id"
+          bindtap="onFeaturedTap"
+          data-id="{{item.id}}"
+        >
+          <image src="{{item.image}}" class="grid-image" mode="aspectFill" />
+          <text class="grid-title">{{item.title}}</text>
+          <view class="grid-info">
+            <image src="{{item.user.avatar || '/images/avatar/avatar3.png'}}" class="grid-avatar" />
+            <text class="grid-author">{{item.user.name}}</text>
+            <text class="grid-time">{{item.publishTime.split(' ')[0]}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 无结果提示 -->
+      <view class="no-results" wx:if="{{filteredFeaturedPosts.length === 0}}">
+        <text class="no-results-icon">🔍</text>
+        <text>没有找到匹配的内容</text>
+        <text class="tip">尝试其他关键词或查看热门内容</text>
+      </view>
+    </view>
+  </block>
+</view>

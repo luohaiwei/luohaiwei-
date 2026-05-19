@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            background-color: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .login-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .login-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .login-footer a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .login-count {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var userEmail = document.forms["loginForm"]["userEmail"].value;
+            var userPassword = document.forms["loginForm"]["userPassword"].value;
+
+            if (userEmail === "") {
+                alert("邮箱不能为空");
+                return false;
+            }
+            if (userPassword.length < 7) {
+                alert("密码不能小于七位数且不能为空");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+<div class="login-container">
+    <div class="login-header">
+        <h1>用户登录</h1>
+        <p>欢迎回到社区论坛</p>
+    </div>
+
+    <!-- 消息提示 -->
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+    <form name="loginForm" action="/users/loginServer" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="userEmail">邮箱</label>
+            <input type="text" id="userEmail" name="userEmail" class="form-control" placeholder="请输入您的邮箱">
+        </div>
+
+        <div class="form-group">
+            <label for="userPassword">密码</label>
+            <input type="password" id="userPassword" name="userPassword" class="form-control" placeholder="请输入您的密码">
+        </div>
+
+        <button type="submit" class="btn">登录</button>
+    </form>
+
+    <div class="login-footer">
+        <a href="/to/page/register">注册新账号</a>
+        <a href="/admin/login">管理员登录</a>
+    </div>
+
+    <div class="login-count" th:if="${session.loginFailCount != null}">
+        登录失败次数: <span th:text="${session.loginFailCount}"></span>
+    </div>
+</div>
+</body>
+</html>

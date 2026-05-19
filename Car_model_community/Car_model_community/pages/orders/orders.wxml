@@ -1,0 +1,47 @@
+<!-- pages/orders/orders.wxml -->
+<view class="container">
+  <view wx:if="{{loading}}" class="loading-container">
+    <image src="/images/loading.png" class="loading-icon"></image>
+    <text>加载中...</text>
+  </view>
+  
+  <view wx:else>
+    <view wx:if="{{orders.length === 0}}" class="empty-orders">
+      <image src="/images/empty-order.png" class="empty-icon"></image>
+      <text class="empty-text">暂无订单</text>
+      <view class="empty-hint" bindtap="goToMall">快去商城选购心仪的车模吧</view>
+    </view>
+    
+    <view wx:else class="orders-list">
+      <view 
+        wx:for="{{orders}}" 
+        wx:key="orderId" 
+        class="order-card"
+        bindtap="onOrderTap"
+        data-id="{{item.orderId}}"
+      >
+        <view class="order-header">
+          <text class="order-id">订单号: {{item.orderId}}</text>
+          <text class="order-status {{item.status === '待付款' ? 'pending' : 'completed'}}">
+            {{item.status}}
+          </text>
+        </view>
+        
+        <view class="goods-preview">
+          <image 
+            wx:for="{{item.goods}}" 
+            wx:key="id" 
+            class="goods-thumb" 
+            src="{{item.imageUrl}}"
+            mode="aspectFit"
+          ></image>
+        </view>
+        
+        <view class="order-footer">
+          <text class="total-price">¥{{item.totalPrice}}</text>
+          <text class="order-time">{{item.formattedOrderTime || '无'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
